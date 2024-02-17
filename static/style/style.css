@@ -1,0 +1,49 @@
+/* Sidebar styling */
+.sidebar {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 250px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+/* Sidebar links */
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+}
+
+/* On mouse-over */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Main content */
+.content {
+    margin-left: 250px; /* Same as the width of the sidebar */
+    padding: 20px;
+    height: 1000px; /* Sample height */
+}
+
+.content table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.content td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.content tr:nth-child(even) {
+    background-color: #dddddd;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data and Chart</title>
+      <!-- JavaScript for Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Link to dashboard.js -->
+  <script src="/static/js/dashboard.js"></script>
+  <link rel="stylesheet" href="/static/style/style.css">
+
+</head>
+    <body>
+      <div class="sidebar">
+        <a href="/dashboard">DashBoard 1</a>
+        <a href="/dashboard">DashBoard 2</a>
+        <a href="/dashboard">DashBoard 3</a>
+    </div>
+    <div class="content">
+        <h1>Company Data</h1>
+        <!-- Table to display company data -->
+        <table id="company-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Initial Share Price</th>
+                    <th>Current Share Price</th>                    
+                </tr>
+            </thead>
+            <tbody>
+            {{range .company}}
+            <tr>
+                <td>{{.Name}}</td>
+                <td>{{printf "%.2f" .IShare}}</td>
+                <td>{{printf "%.2f" .CShare}}</td>
+            </tr>
+            {{end}}
+    </table>
+    <button id="prev" onclick="window.location.href='/prev';">Previous</button>
+    <button id="next" onclick="window.location.href='/next';">Next</button>
+    <!-- Container for the graph -->
+</div>
+    <div>
+      <canvas id="company-chart" width="800" height="400"></canvas>
+    </div>
+
+
+</body>
+</html>
+
+

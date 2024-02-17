@@ -1,0 +1,65 @@
+{
+    "APPLICATION_DETAILS": {
+        "APPLICATION_NAME": "API-CONSENT-ACQ",
+        "HOST_IP": "0.0.0.0",
+        "HOST_PORT": 8092
+    },
+
+    "LOGGER_CONFIG_DETAILS": {
+        "FILE_PATH": "/DISK01/LOGS/API/vil_consentapi/",
+        "FILE_NAME": "log-PUBLIC",
+        "LEVEL": "DEBUG"
+    },
+
+    "MYSQL_CONFIG_DETAILS": {
+        "DATABASE": {
+            "HOST": "172.26.50.92",
+            "PORT": 3306,
+            "USERNAME": "cnstacqapi@vilmaindb",
+            "PASSWORD": "eJxyNshTCXFMDnQoMEzxKQEEAAD//x5oBFQ=",
+            "DATABASE": "TRUBLOQ_V2_VIL",
+            
+            "SSL_FLAG": true,
+            "TLS_ONLY_CA_CERT": true,
+            "CA_CERT": "/certs/mysql-certs/ca.pem",
+            "CLIENT_CERT": "/certs/mysql-certs/client-cert.pem",
+            "CLIENT_KEY": "/certs/mysql-certs/client-key.pem"
+        },
+
+        "BATCH_SIZE": 100,
+        "TLS_INSECURE_SKIP_VERIFY": true,
+
+        "IDLE_CONNS": 0,
+        "MAX_CONNS": 1,
+        "MAX_LIFETIME": 10
+    },
+
+    "RABBITMQ_CONFIG_DETAILS": {
+        "HOST": "172.26.50.126",
+        "PORT": 5672,
+        "EXCHANGE": "DLT",
+        "VHOST": "/prod-vil-dlt",
+        "DURABLE": true,
+        "USERNAME": "tanla",
+        "PASSWORD": "eJwKcchTTAxKtLBQLAEEAAD//xPDAz0=",
+        "ADD_TIMEOUT": 10,
+        "PREFETCH_COUNT": 5,
+
+        "PUBLISH_QUEUE": "pub-q",
+        "CONSUMER_QUEUE": "cons-q",
+
+        "CA_CERT": "/certs/rmq-certs/ca.pem",
+        "CLIENT_CERT": "/certs/rmq-certs/client-cert.pem",
+        "CLIENT_KEY": "/certs/rmq-certs/client-key.pem",
+        "SSL_FLAG": false,
+        "TLS_INSECURE_SKIP_VERIFY": true,
+        "TLS_ONLY_CA_CERT": true
+    },
+
+    "RETRY_COUNT": 10,
+    "DELAY_TIME": 10,
+
+    "RATE_LIMIT": 1000000,
+
+    "dev_env": false
+}
