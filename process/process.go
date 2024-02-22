@@ -3,7 +3,6 @@ package process
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"phase1/pkg/database"
 
@@ -53,26 +52,17 @@ func setupRouter() *gin.Engine {
 	// Serve static files (including the chart image)
 	r.Static("/static", "./static")
 
-	// r.GET("/dashboard", handleIndex)
-
 	r.GET("/dashboard", func(c *gin.Context) {
-		// Default offset to 0 if not specified
-		offsetStr := c.DefaultQuery("offset", "0")
-		offset, err := strconv.Atoi(offsetStr)
-		if err != nil {
-			// handle error
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid offset"})
-			return
-		}
-
-		// Use offset to fetch data
-		cmp := getShareDetails(offset) // Implement this function to use offset
+		c.HTML(http.StatusOK, "shares.html", gin.H{})
+	})
+	// New API endpoint for company shares data
+	r.GET("/api/company-share", func(c *gin.Context) {
+		cmp := getShareDetails()
 		if len(cmp) == 0 {
-			c.HTML(http.StatusInternalServerError, "shares.html", gin.H{"error": "empty"})
+			c.JSON(http.StatusNotFound, gin.H{"error": "No company shares data found"})
 			return
 		}
-
-		c.HTML(http.StatusOK, "shares.html", gin.H{"company": cmp})
+		c.JSON(http.StatusOK, cmp)
 	})
 
 	r.GET("/next", func(c *gin.Context) {
@@ -93,26 +83,17 @@ func setupRouter() *gin.Engine {
 }
 
 func handleIndex(c *gin.Context) {
-	cmp := getShareDetailsWithoutOffset()
+	cmp := getShareDetails()
 	if len(cmp) == 0 {
 		c.HTML(http.StatusInternalServerError, "shares.html", gin.H{"error": "empty"})
 		return
 	}
 
-	c.HTML(http.StatusOK, "shares.html", gin.H{"company": cmp})
+	c.HTML(http.StatusOK, "shares.html", gin.H{})
 }
 
-func getShareDetailsWithoutOffset() []Company {
-	query := fmt.Sprintf("SELECT vcInvestedCompany, dEntrySharePrice, dCurrentSharePrice FROM %s.%s ORDER BY iCompanyID DESC LIMIT 5 OFFSET ?", mysqlObj.Database, table)
-	shares, flag := mysqlLoadShares(query, 0)
-	if !flag {
-		return []Company{}
-	}
-	return shares
-}
-
-func getShareDetails(offset int) []Company {
-	query := fmt.Sprintf("SELECT vcInvestedCompany, dEntrySharePrice, dCurrentSharePrice FROM %s.%s ORDER BY iCompanyID DESC LIMIT 5 OFFSET ?", mysqlObj.Database, table)
+func getShareDetails() []Company {
+	query := fmt.Sprintf("SELECT vcInvestedCompany, dEntrySharePrice, dCurrentSharePrice FROM %s.%s ORDER BY dEntrySharePrice, dCurrentSharePrice LIMIT 5 OFFSET ?", mysqlObj.Database, table)
 	shares, flag := mysqlLoadShares(query, offset)
 	if !flag {
 		return []Company{}
