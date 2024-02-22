@@ -9,12 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function fetchCompanyData() {
     return new Promise((resolve, reject) => {
-        // Example AJAX call to fetch company data
-        // Adjust URL/path as necessary
-        fetch('/api/companies')
-            .then(response => response.json())
+        // Update the fetch URL to the correct endpoint
+        fetch('/dashboard')
+            .then(response => {
+                // Check if the response is ok (status in the range 200-299)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => resolve(data))
-            .catch(error => reject(error));
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+                reject(error);
+            });
     });
 }
 
@@ -61,7 +69,24 @@ function createBarChart(companies) {
                 y: {
                     beginAtZero: true
                 }
+            },
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Share Price'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Company'
+                    }
+                }
             }
         }
+        
     });
 }
