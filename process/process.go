@@ -52,11 +52,9 @@ func setupRouter() *gin.Engine {
 	// Serve static files (including the chart image)
 	r.Static("/static", "./static")
 
-	r.GET("/dashboard", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "shares.html", gin.H{})
-	})
+	// r.GET("/dashboard", handleIndex)
 	// New API endpoint for company shares data
-	r.GET("/api/company-share", func(c *gin.Context) {
+	r.GET("/dashboard", func(c *gin.Context) {
 		cmp := getShareDetails()
 		if len(cmp) == 0 {
 			c.JSON(http.StatusNotFound, gin.H{"error": "No company shares data found"})
@@ -89,7 +87,7 @@ func handleIndex(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "shares.html", gin.H{})
+	c.HTML(http.StatusOK, "shares.html", gin.H{"company": cmp})
 }
 
 func getShareDetails() []Company {
